@@ -49,6 +49,13 @@ const $remove = (elem) => {
 
     while(true){
 
+      if (window.location.href == "https://play.pegaxy.io/racing")) {
+        window.location.href = "https://play.pegaxy.io/racing/pick-pega";
+        await sleep(1000 * 5);
+        location.reload(true);
+        await sleep(1000 * 5);
+      }
+
       if (window.location.href.startsWith("https://play.pegaxy.io/racing/live")) {
         await sleep(1000 * 3);
         await restart("Reiniciou");
