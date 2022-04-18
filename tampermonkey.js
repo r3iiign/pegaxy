@@ -53,7 +53,7 @@ const $remove = (elem) => {
     while(true){
 
       if (reloaded){
-        await sleep(1000 * 5);
+        await sleep(1000 * 3);
       }
       reloaded = false
 
@@ -101,7 +101,7 @@ const $remove = (elem) => {
       if (comingSoon > 0 && (comingSoon % 5 == 0) ) {
 
         console.log("comingSoon % 5 - CTRL + F5")
-        await sleep(1000 * 2);
+        await sleep(1000 * 1);
         location.reload(true);
       }
       if (comingSoon > 20) {
@@ -143,15 +143,15 @@ const $remove = (elem) => {
           console.log("Vai clicar no pega");
           var pegaxy = $a(".item-pega")[pegaIndex];
           pegaxy.click();
-          await sleep(1000 * 5);
+          await sleep(1000 * 2);
           // console.log("Clicou no pega");
 
           emptyEnergy = 0;
         }
         else {
           emptyEnergy ++;
-          if (emptyEnergy > 30){
-            await restart("Recarregando após energia zerada de 30x - reloading")
+          if (emptyEnergy > 5){
+            await restart("Recarregando após energia zerada de 5x - reloading")
           }
         }
 
