@@ -28,26 +28,26 @@ def get_data():
 
     sub_accounts_already_run = [x for x in sub_accounts if _already_run(x)]
 
-    accounts_with_0_horses = list(map(lambda x: {x["sub_account_index"], x["sub_account"]},
+    accounts_with_0_horses = list(map(lambda x: {"index" :x["sub_account_index"], "subaccount": x["sub_account"]},
                                       [x for x in sub_accounts_already_run if
                                        (not _has_horses(x["energy_pega_1"])) and
                                        (not _has_horses(x["energy_pega_2"])) and
                                        (not _has_horses(x["energy_pega_3"]))
                                        ]))
 
-    accounts_with_1_horses = list(map(lambda x: list({x["sub_account_index"], x["sub_account"], x["energy_pega_1"]}),
+    accounts_with_1_horses = list(map(lambda x: {"index" :x["sub_account_index"], "subaccount": x["sub_account"], "pega_1": x["energy_pega_1"]},
                                       [x for x in sub_accounts_already_run if
                                        _has_horses(x["energy_pega_1"]) and
                                        (not _has_horses(x["energy_pega_2"])) and
                                        (not _has_horses(x["energy_pega_3"]))
                                        ]))
-    accounts_with_2_horses = list(map(lambda x: list({x["sub_account_index"], x["sub_account"], x["energy_pega_1"], x["energy_pega_2"]}),
+    accounts_with_2_horses = list(map(lambda x: {"index" :x["sub_account_index"], "subaccount": x["sub_account"], "pega_1": x["energy_pega_1"], "pega_2": x["energy_pega_2"]},
                                       [x for x in sub_accounts_already_run if
                                        _has_horses(x["energy_pega_1"]) and
                                        _has_horses(x["energy_pega_2"]) and
                                        (not _has_horses(x["energy_pega_3"]))
                                        ]))
-    accounts_with_3_horses = list(map(lambda x: list({x["sub_account_index"], x["sub_account"], x["energy_pega_1"], x["energy_pega_2"], x["energy_pega_3"]}),
+    accounts_with_3_horses = list(map(lambda x: {"index" :x["sub_account_index"], "subaccount": x["sub_account"], "pega_1": x["energy_pega_1"], "pega_2": x["energy_pega_2"], "pega_3": x["energy_pega_3"]},
                                       [x for x in sub_accounts_already_run if
                                        _has_horses(x["energy_pega_1"]) and
                                        _has_horses(x["energy_pega_2"]) and
