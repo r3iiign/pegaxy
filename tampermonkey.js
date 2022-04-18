@@ -48,18 +48,23 @@ const $remove = (elem) => {
     var pegaEnergy1 = "";
     var pegaEnergy2 = "";
     var pegaEnergy3 = "";
+    var reloaded = true
 
     while(true){
 
+      if (reloaded){
+        await sleep(1000 * 5);
+      }
+      reload = false
+
       if (window.location.href == "https://play.pegaxy.io/racing") {
         window.location.href = "https://play.pegaxy.io/racing/pick-pega";
-        await sleep(1000 * 5);
+        await sleep(1000 * 2);
         location.reload(true);
-        await sleep(1000 * 5);
       }
 
       if (window.location.href.startsWith("https://play.pegaxy.io/racing/live")) {
-        await sleep(1000 * 3);
+        await sleep(1000 * 2);
         await restart("Reiniciou");
       }
 
@@ -98,7 +103,6 @@ const $remove = (elem) => {
         console.log("comingSoon % 5 - CTRL + F5")
         await sleep(1000 * 2);
         location.reload(true);
-        await sleep(1000 * 2);
       }
       if (comingSoon > 20) {
         await restart("ComingSoon - reloading")
@@ -173,9 +177,8 @@ const $remove = (elem) => {
 
         botao = $(".button-game.primary");
         if(botao && botao.innerText == "I understand"){
-            await sleep(1000 * 5);
+            await sleep(1000 * 1);
             location.reload(true);
-            await sleep(1000 * 5);
         }
       }
 
@@ -258,7 +261,6 @@ async function restart(description) {
     pegaEnergy3 = "";
     await sleep(1000 * 5);
     location.reload(true);
-    await sleep(1000 * 5);
 }
 
 function httpGetAsync(theUrl, callback) {
