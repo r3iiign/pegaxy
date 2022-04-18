@@ -64,6 +64,11 @@ const $remove = (elem) => {
 
       connect();
 
+      if ($("span.content-name-title").textContent == "Renting") {
+            await restart("Sem cavalos - reloading")
+      }
+
+
       if (isMatchingfreeze()) {
         await restart("Matchingfreeze - reloading")
         continue;

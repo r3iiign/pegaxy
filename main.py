@@ -75,7 +75,10 @@ def _get_next_sub_account_index():
 
 
 def _get_empty_sub_account():
-    return next(x for x in sub_accounts if x["sub_account"] is "")
+    try:
+        return next(x for x in sub_accounts if x["sub_account"] is "")
+    except:
+        return None
 
 
 if __name__ == '__main__':
