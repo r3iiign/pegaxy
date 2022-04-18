@@ -74,13 +74,20 @@ const $remove = (elem) => {
         continue;
       }
 
-      if (isComingSoon()) {
+      if (isCommingSoon()) {
         comingSoon ++;
       } else {
         comingSoon = 0;
       }
 
-      if (comingSoon > 10) {
+      if (comingSoon > 0 && (comingSoon % 5 == 0) ) {
+
+        console.log("comingSoon % 5 - CTRL + F5")
+        await sleep(1000 * 2);
+        location.reload(true);
+        await sleep(1000 * 2);
+      }
+      if (comingSoon > 20) {
         await restart("ComingSoon - reloading")
         continue;
       }
@@ -212,7 +219,7 @@ const $remove = (elem) => {
       return  !!($("div.thumb-matching span:nth-of-type(2)") && $("div.thumb-matching span:nth-of-type(2)").textContent > 120)
     }
 
-    function isComingSoon() {
+    function isCommingSoon() {
       return  !!($("div.commingsoon-title") && $("div.commingsoon-title").textContent == "Loading...")
     }
 
@@ -227,10 +234,10 @@ async function restart(description) {
 
     $(".navbar-assest .assest-inner:nth-of-type(3)").click()
 
-    sub_account = $("div.navdrop-inner div.sidebar.open div.sidebar-inner div.sidebar-header button span").textContent
+    const subAccount = $("div.navdrop-inner div.sidebar.open div.sidebar-inner div.sidebar-header button span").textContent
 
     httpGetAsync("http://localhost:5000/pega_race_started?" +
-    "sub_account=" + sub_account +
+    "sub_account=" + subAccount +
     "&energy_pega_1=" + pegaEnergy1 +
     "&energy_pega_2=" + pegaEnergy2 +
     "&energy_pega_3=" + pegaEnergy3
