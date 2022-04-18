@@ -56,7 +56,9 @@ def metamask_get_next_sub_account():
     if sub_account_object[0]["playing"]:
         sub_account_object[0]["playing"] = False
         sub_account_object[0]["started_time"] = datetime.datetime.now()
+
         next_sub_account_index = _get_next_sub_account_index()
+        sub_accounts[next_sub_account_index]["started_time"] = datetime.datetime.now()
         return jsonify({
             'to_change': True,
             "next_sub_account_index": next_sub_account_index
