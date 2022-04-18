@@ -139,7 +139,8 @@ def _get_next_sub_account_index():
     if empty_sub_account is not None:
         return empty_sub_account['sub_account_index']
     else:
-        return min(sub_accounts, key=lambda x: x['started_time'])['sub_account_index']
+        # return max(sub_accounts, key=lambda x: x['started_time'])['sub_account_index']
+        return max(sub_accounts, key=lambda x: max({x['energy_pega_1'], x['energy_pega_2'], x['energy_pega_3']}, key=lambda y: y))['sub_account_index']
 
 
 def _get_empty_sub_account():
