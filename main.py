@@ -87,10 +87,11 @@ def _already_run(account):
 def _has_horses(value):
     return value != ""
 
+
 @app.route('/account_empty_energy', methods=['GET'])
 def pega_empty():
     sub_account = request.args.get('sub_account')
-    sub_account_object = [x for x in sub_accounts if x["sub_account"].startswith(sub_account[:5]) and x["sub_account"].endswith( "..." + sub_account[-4:])]
+    sub_account_object = [x for x in sub_accounts if x["sub_account"].startswith(sub_account[:5]) and x["sub_account"].endswith( "..." + sub_account[-4:])][0]
 
     sub_account_object["try_to_refresh_with_empty_energy"] = sub_account_object["try_to_refresh_with_empty_energy"] + 1
 
