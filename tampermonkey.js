@@ -43,6 +43,7 @@ const $remove = (elem) => {
     var comingSoon = 0;
     var joinMatch = 0;
     var emptyEnergy = 0;
+    var energyWith_0 = 0;
     var renting = 0;
 
     var pegaEnergy1 = "";
@@ -128,7 +129,7 @@ const $remove = (elem) => {
           await sleep(1000);
         }
 
-        var pegaIndex = await getMaxEnergy();
+        var pegaIndex = await getPegaWithMaxEnergy(energyWith_0);
 
         try{ pegaEnergy1 = $(".pick-pega > .list-pick > div.item-pega:nth-of-type(1) div div div:nth-of-type(3) div:nth-of-type(2) div div:nth-of-type(2) div span").textContent.split("/25")[0] } catch(e){ pegaEnergy1 = ""}
         try{ pegaEnergy2 = $(".pick-pega > .list-pick > div.item-pega:nth-of-type(2) div div div:nth-of-type(3) div:nth-of-type(2) div div:nth-of-type(2) div span").textContent.split("/25")[0] } catch(e){ pegaEnergy2 = ""}
@@ -150,8 +151,8 @@ const $remove = (elem) => {
         }
         else {
           emptyEnergy ++;
-          if (emptyEnergy > 3){
-            await restart("Recarregando após energia zerada de 5x - reloading")
+          if (emptyEnergy > 5){
+            await restart("Recarregando após não encontrar cavalos - reloading")
           } else {
             location.reload(true);
           }
@@ -186,7 +187,7 @@ const $remove = (elem) => {
 
     }
 
-    async function getMaxEnergy() {
+    async function getPegaWithMaxEnergy(energyWith_0) {
 
       if (!$(".pick-pega > .list-pick div")){
         return undefined;
@@ -209,7 +210,14 @@ const $remove = (elem) => {
       }
 
       if (maxEnergy == 0) {
-        await restart("Recarregando após energia zerada - reloading")
+        emptyEnergy ++;
+        if (emptyEnergy > 5){
+          await restart("Recarregando após energia zerada - reloading")
+        } else {
+          location.reload(true);
+        }
+      } else {
+        emptyEnergy = 0
       }
 
       return pegaMaxEnergy;
