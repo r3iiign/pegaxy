@@ -55,7 +55,7 @@ const $remove = (elem) => {
       if (reloaded){
         await sleep(1000 * 5);
       }
-      reload = false
+      reloaded = false
 
       if (window.location.href == "https://play.pegaxy.io/racing") {
         window.location.href = "https://play.pegaxy.io/racing/pick-pega";
