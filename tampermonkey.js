@@ -150,8 +150,10 @@ const $remove = (elem) => {
         }
         else {
           emptyEnergy ++;
-          if (emptyEnergy > 5){
+          if (emptyEnergy > 3){
             await restart("Recarregando após energia zerada de 5x - reloading")
+          } else {
+            location.reload(true);
           }
         }
 
