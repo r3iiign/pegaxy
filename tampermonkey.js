@@ -241,9 +241,6 @@ async function restart(description) {
 
     console.log("Restart: " + description)
 
-    pegaEnergy1 = "";
-    pegaEnergy2 = "";
-    pegaEnergy3 = "";
 
     $(".navbar-assest .assest-inner:nth-of-type(3)").click()
 
@@ -254,8 +251,11 @@ async function restart(description) {
     "&energy_pega_1=" + pegaEnergy1 +
     "&energy_pega_2=" + pegaEnergy2 +
     "&energy_pega_3=" + pegaEnergy3
-    , ()=>{ window.location.href = "https://play.pegaxy.io/racing/pick-pega";})
+    , ()=>{ pegaEnergy1 = "";pegaEnergy2 = "";pegaEnergy3 = ""; window.location.href = "https://play.pegaxy.io/racing/pick-pega";})
 
+    pegaEnergy1 = "";
+    pegaEnergy2 = "";
+    pegaEnergy3 = "";
     await sleep(1000 * 5);
     location.reload(true);
     await sleep(1000 * 5);
