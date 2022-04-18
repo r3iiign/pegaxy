@@ -143,7 +143,7 @@ def _get_next_sub_account_index(actual_sub_account):
 
         max_energy = max({sub_account_object['energy_pega_1'], sub_account_object['energy_pega_2'], sub_account_object['energy_pega_3']})
 
-        if max_energy > 10:
+        if int(max_energy) > 10:
             return sub_account_object['sub_account_index']
         else:
             return max(sub_accounts, key=lambda x: x['started_time'])['sub_account_index']
