@@ -64,7 +64,7 @@ const $remove = (elem) => {
 
       connect();
 
-      if ($("span.content-name-title").textContent == "Renting") {
+      if ($("span.content-name-title") && $("span.content-name-title").textContent == "Renting") {
             await restart("Sem cavalos - reloading")
       }
 
