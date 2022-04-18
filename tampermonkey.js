@@ -43,6 +43,7 @@ const $remove = (elem) => {
     var comingSoon = 0;
     var joinMatch = 0;
     var emptyEnergy = 0;
+    var renting = 0;
 
     var pegaEnergy1 = "";
     var pegaEnergy2 = "";
@@ -73,13 +74,17 @@ const $remove = (elem) => {
       connect();
 
       if ($("span.content-name-title") && $("span.content-name-title").textContent == "Renting") {
-            await restart("Sem cavalos - reloading")
+        renting ++;
+      } else {
+        renting = 0;
       }
 
+      if (renting > 3) {
+        await restart("Sem cavalos - reloading")
+      }
 
       if (isMatchingfreeze()) {
         await restart("Matchingfreeze - reloading")
-        continue;
       }
 
       if (isCommingSoon()) {
@@ -97,7 +102,6 @@ const $remove = (elem) => {
       }
       if (comingSoon > 20) {
         await restart("ComingSoon - reloading")
-        continue;
       }
 
 
@@ -109,7 +113,6 @@ const $remove = (elem) => {
 
       if (joinMatch > 30) {
         await restart("JoinMatch - reloading")
-        continue;
       }
 
       if(!$(".viewAlert")){
@@ -129,7 +132,6 @@ const $remove = (elem) => {
 
         if (pegaIndex === undefined) {
           await sleep(2000);
-          continue
         }
 
         if(pegaIndex >=0 ){
@@ -147,7 +149,6 @@ const $remove = (elem) => {
           if (emptyEnergy > 30){
             await restart("Recarregando após energia zerada de 30x - reloading")
           }
-          continue
         }
 
         var botaoStart = $(".viewButton");
@@ -240,6 +241,10 @@ async function restart(description) {
 
     console.log("Restart: " + description)
 
+    pegaEnergy1 = "";
+    pegaEnergy2 = "";
+    pegaEnergy3 = "";
+
     $(".navbar-assest .assest-inner:nth-of-type(3)").click()
 
     const subAccount = $("div.navdrop-inner div.sidebar.open div.sidebar-inner div.sidebar-header button span").textContent
@@ -250,10 +255,6 @@ async function restart(description) {
     "&energy_pega_2=" + pegaEnergy2 +
     "&energy_pega_3=" + pegaEnergy3
     , ()=>{ window.location.href = "https://play.pegaxy.io/racing/pick-pega";})
-
-    pegaEnergy1 = "";
-    pegaEnergy2 = "";
-    pegaEnergy3 = "";
 
     await sleep(1000 * 5);
     location.reload(true);
