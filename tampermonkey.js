@@ -199,7 +199,7 @@ const $remove = (elem) => {
       for (var i = 0; i <= 3; i++) {
         const pegaObject = $(".pick-pega > .list-pick > div.item-pega:nth-of-type(" + (i + 1) + ") div div div:nth-of-type(3) div:nth-of-type(2) div div:nth-of-type(2) div span");
         if (pegaObject){
-          const actualEnergy = pegaObject.textContent.split("/25")[0]
+          const actualEnergy = parseInt(pegaObject.textContent.split("/25")[0])
           if (actualEnergy > maxEnergy){
             maxEnergy = actualEnergy;
             if (actualEnergy > 0) {
