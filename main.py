@@ -14,6 +14,7 @@ sub_accounts = [{
     "energy_pega_1": -1,
     "energy_pega_2": -1,
     "energy_pega_3": -1,
+    "try_to_refresh_with_empty_energy": 0,
     "playing": False
 } for x in range(quantity_sub_account)]
 
@@ -85,6 +86,19 @@ def _already_run(account):
 
 def _has_horses(value):
     return value != ""
+
+@app.route('/account_empty_energy', methods=['GET'])
+def pega_empty():
+    sub_account = request.args.get('sub_account')
+    sub_account_object = [x for x in sub_accounts if x["sub_account"].startswith(sub_account[:5]) and x["sub_account"].endswith( "..." + sub_account[-4:])]
+
+    sub_account_object["try_to_refresh_with_empty_energy"] = sub_account_object["try_to_refresh_with_empty_energy"] + 1
+
+    if sub_account_object["try_to_refresh_with_empty_energy"] > 3:
+        sub_account_object["try_to_refresh_with_empty_energy"] = 0
+        return jsonify({'to_go_to_next_account': True})
+    else:
+        return jsonify({'to_go_to_next_account': False})
 
 
 @app.route('/pega_race_started', methods=['GET'])

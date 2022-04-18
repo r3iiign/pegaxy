@@ -42,8 +42,6 @@ const $remove = (elem) => {
 (async function() {
     var comingSoon = 0;
     var joinMatch = 0;
-    var emptyEnergy = 0;
-    var energyWith_0 = 0;
     var renting = 0;
 
     var pegaEnergy1 = "";
@@ -129,7 +127,7 @@ const $remove = (elem) => {
           await sleep(1000);
         }
 
-        var pegaIndex = await getPegaWithMaxEnergy(energyWith_0);
+        var pegaIndex = await getPegaWithMaxEnergy();
 
         try{ pegaEnergy1 = $(".pick-pega > .list-pick > div.item-pega:nth-of-type(1) div div div:nth-of-type(3) div:nth-of-type(2) div div:nth-of-type(2) div span").textContent.split("/25")[0] } catch(e){ pegaEnergy1 = ""}
         try{ pegaEnergy2 = $(".pick-pega > .list-pick > div.item-pega:nth-of-type(2) div div div:nth-of-type(3) div:nth-of-type(2) div div:nth-of-type(2) div span").textContent.split("/25")[0] } catch(e){ pegaEnergy2 = ""}
@@ -148,14 +146,6 @@ const $remove = (elem) => {
           // console.log("Clicou no pega");
 
           emptyEnergy = 0;
-        }
-        else {
-          emptyEnergy ++;
-          if (emptyEnergy > 5){
-            await restart("Recarregando após não encontrar cavalos - reloading")
-          } else {
-            location.reload(true);
-          }
         }
 
         var botaoStart = $(".viewButton");
@@ -187,7 +177,7 @@ const $remove = (elem) => {
 
     }
 
-    async function getPegaWithMaxEnergy(energyWith_0) {
+    async function getPegaWithMaxEnergy() {
 
       if (!$(".pick-pega > .list-pick div")){
         return undefined;
@@ -209,15 +199,20 @@ const $remove = (elem) => {
         }
       }
 
-      if (maxEnergy == 0) {
-        emptyEnergy ++;
-        if (emptyEnergy > 5){
-          await restart("Recarregando após energia zerada - reloading")
-        } else {
-          location.reload(true);
-        }
-      } else {
-        emptyEnergy = 0
+      if (maxEnergy == 0 || pegaMaxEnergy < 0) {
+
+        $(".navbar-assest .assest-inner:nth-of-type(3)").click()
+        const subAccount = $("div.navdrop-inner div.sidebar.open div.sidebar-inner div.sidebar-header button span").textContent
+
+        httpGetAsync("http://localhost:5000/account_empty_energy?sub_account=" + subAccount, (result) => {
+          result = JSON.parse(result)
+          if (result["to_go_to_next_account"]) {
+            await restart("Recarregando após energia zerada - reloading")
+          } else {
+            location.reload(true);
+          }
+
+        })
       }
 
       return pegaMaxEnergy;
@@ -256,7 +251,6 @@ async function restart(description) {
 
 
     $(".navbar-assest .assest-inner:nth-of-type(3)").click()
-
     const subAccount = $("div.navdrop-inner div.sidebar.open div.sidebar-inner div.sidebar-header button span").textContent
 
     httpGetAsync("http://localhost:5000/pega_race_started?" +
