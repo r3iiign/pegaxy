@@ -152,7 +152,9 @@ const $remove = (elem) => {
 
         botao = $(".button-game.primary");
         if(botao && botao.innerText == "I understand"){
-            botao.click();
+            await sleep(1000 * 5);
+            location.reload(true);
+            await sleep(1000 * 5);
         }
       }
 
