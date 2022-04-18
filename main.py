@@ -17,9 +17,75 @@ sub_accounts = [{
     "playing": False
 } for x in range(quantity_sub_account)]
 
+
 @app.route('/', methods=['GET'])
-def get_data():
+def get_all_data():
     return jsonify({'sub_accounts': sub_accounts})
+
+
+@app.route('/data', methods=['GET'])
+def get_data():
+
+    sub_accounts_already_run = [x for x in sub_accounts if _already_run(x)]
+
+    accounts_with_0_horses = list(map(lambda x: {x["sub_account_index"], x["sub_account"]},
+                                      [x for x in sub_accounts_already_run if
+                                       (not _has_horses(x["energy_pega_1"])) and
+                                       (not _has_horses(x["energy_pega_2"])) and
+                                       (not _has_horses(x["energy_pega_3"]))
+                                       ]))
+
+    accounts_with_1_horses = list(map(lambda x: list({x["sub_account_index"], x["sub_account"], x["energy_pega_1"]}),
+                                      [x for x in sub_accounts_already_run if
+                                       _has_horses(x["energy_pega_1"]) and
+                                       (not _has_horses(x["energy_pega_2"])) and
+                                       (not _has_horses(x["energy_pega_3"]))
+                                       ]))
+    accounts_with_2_horses = list(map(lambda x: list({x["sub_account_index"], x["sub_account"], x["energy_pega_1"], x["energy_pega_2"]}),
+                                      [x for x in sub_accounts_already_run if
+                                       _has_horses(x["energy_pega_1"]) and
+                                       _has_horses(x["energy_pega_2"]) and
+                                       (not _has_horses(x["energy_pega_3"]))
+                                       ]))
+    accounts_with_3_horses = list(map(lambda x: list({x["sub_account_index"], x["sub_account"], x["energy_pega_1"], x["energy_pega_2"], x["energy_pega_3"]}),
+                                      [x for x in sub_accounts_already_run if
+                                       _has_horses(x["energy_pega_1"]) and
+                                       _has_horses(x["energy_pega_2"]) and
+                                       _has_horses(x["energy_pega_3"])
+                                       ]))
+
+    json_to_return = {
+        "horses_in_accounts": {
+            "0": {
+                "qtd": len(accounts_with_0_horses),
+                "accounts": accounts_with_0_horses
+            },
+            "1": {
+                "qtd": len(accounts_with_1_horses),
+                "accounts": accounts_with_1_horses
+            },
+            "2": {
+                "qtd": len(accounts_with_2_horses),
+                "accounts": accounts_with_2_horses
+            },
+            "3": {
+                "qtd": len(accounts_with_3_horses),
+                "accounts": accounts_with_3_horses
+            }
+
+        }
+    }
+
+    return jsonify({'data': json_to_return})
+
+
+def _already_run(account):
+    return account["energy_pega_1"] != -1 and account["energy_pega_2"] != -1 and account["energy_pega_3"] != -1
+
+
+def _has_horses(value):
+    return value != ""
+
 
 @app.route('/pega_race_started', methods=['GET'])
 def pega_race_started():

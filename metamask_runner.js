@@ -75,7 +75,7 @@ async function changeSubaccount(subaccountIndex) {
     console.log("Erro no click inicial ", e);
   }
 
-  await sleep(1000 * 1); // 5 segundos
+  await sleep(500); // 1/2 segundos
 
   try{
     $("div.account-menu__accounts").children[subaccountIndex].click();
