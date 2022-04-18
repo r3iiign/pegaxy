@@ -139,8 +139,18 @@ def _get_next_sub_account_index(actual_sub_account):
     if empty_sub_account is not None:
         return empty_sub_account['sub_account_index']
     else:
-        # return max(sub_accounts, key=lambda x: x['started_time'])['sub_account_index']
-        return max(filter(lambda f: f["sub_account"] != actual_sub_account, sub_accounts), key=lambda x: max({x['energy_pega_1'], x['energy_pega_2'], x['energy_pega_3']}, key=lambda y: y))['sub_account_index']
+        sub_account_object = max(filter(lambda f: f["sub_account"] != actual_sub_account, sub_accounts), key=lambda x: max({x['energy_pega_1'], x['energy_pega_2'], x['energy_pega_3']}, key=lambda y: y))
+
+        max_energy = max({sub_account_object['energy_pega_1'], sub_account_object['energy_pega_2'], sub_account_object['energy_pega_3']})
+
+        if max_energy > 10:
+            return sub_account_object['sub_account_index']
+        else:
+            return max(sub_accounts, key=lambda x: x['started_time'])['sub_account_index']
+
+
+
+
 
 
 def _get_empty_sub_account():
