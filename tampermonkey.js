@@ -7,6 +7,7 @@
 // @match        https://play.pegaxy.io/racing/finish*
 // @match        https://play.pegaxy.io/racing/pick-pega*
 // @match        https://play.pegaxy.io/racing/*
+// @match        https://play.pegaxy.io/racing
 // @icon         https://www.google.com/s2/favicons?domain=pegaxy.io
 // @grant        none
 // @license      MIT
@@ -49,7 +50,7 @@ const $remove = (elem) => {
 
     while(true){
 
-      if (window.location.href == "https://play.pegaxy.io/racing")) {
+      if (window.location.href == "https://play.pegaxy.io/racing") {
         window.location.href = "https://play.pegaxy.io/racing/pick-pega";
         await sleep(1000 * 5);
         location.reload(true);
