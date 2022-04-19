@@ -74,7 +74,7 @@ const $remove = (elem) => {
 
       if (window.location.href.startsWith("https://play.pegaxy.io/racing/live")) {
         await sleep(1000 * 2);
-        await restart("Reiniciou");
+        await restart("corrida iniciada");
       }
 
       await sleep(2000);
@@ -163,9 +163,17 @@ const $remove = (elem) => {
       }
       else {
 
-        if ( $(".alert-desc") && $(".alert-desc").textContent == "You don't have any available Pegas yet. Required at least one to join racing" ) {
-            await restart("Não tem Pega na conta - reloading")
-        }
+          if ( $(".alert-desc") && $(".alert-desc").textContent == "You don't have any available Pegas yet. Required at least one to join racing" ) {
+
+            httpGetAsync("http://localhost:5000/account_no_pega?sub_account=" + subAccount, async (result) => {
+                result = JSON.parse(result)
+                if (result["to_go_to_next_account"]) {
+                    await restart("Não tem Pega na conta - reloading")
+                } else {
+                    location.reload(true);
+                }
+            })
+          }
 
         var botao = $(".button-game.pinks");
         if(botao){

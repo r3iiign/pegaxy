@@ -15,6 +15,7 @@ sub_accounts = [{
     "energy_pega_2": -1,
     "energy_pega_3": -1,
     "try_to_refresh_with_empty_energy": 0,
+    "try_to_refresh_with_no_pega": 0,
     "playing": False
 } for x in range(quantity_sub_account)]
 
@@ -89,13 +90,26 @@ def _has_horses(value):
 
 
 @app.route('/account_empty_energy', methods=['GET'])
-def pega_empty():
+def account_empty_energy():
     sub_account = request.args.get('sub_account')
     sub_account_object = [x for x in sub_accounts if x["sub_account"].startswith(sub_account[:5]) and x["sub_account"].endswith( "..." + sub_account[-4:])][0]
 
     sub_account_object["try_to_refresh_with_empty_energy"] = sub_account_object["try_to_refresh_with_empty_energy"] + 1
 
     if sub_account_object["try_to_refresh_with_empty_energy"] > 3:
+        return jsonify({'to_go_to_next_account': True})
+    else:
+        return jsonify({'to_go_to_next_account': False})
+
+
+@app.route('/account_no_pega', methods=['GET'])
+def account_no_pega():
+    sub_account = request.args.get('sub_account')
+    sub_account_object = [x for x in sub_accounts if x["sub_account"].startswith(sub_account[:5]) and x["sub_account"].endswith( "..." + sub_account[-4:])][0]
+
+    sub_account_object["try_to_refresh_with_no_pega"] = sub_account_object["try_to_refresh_with_no_pega"] + 1
+
+    if sub_account_object["try_to_refresh_with_no_pega"] > 3:
         return jsonify({'to_go_to_next_account': True})
     else:
         return jsonify({'to_go_to_next_account': False})
@@ -144,6 +158,7 @@ def metamask_get_next_sub_account():
 
         for sub_account in sub_accounts:
             sub_account["try_to_refresh_with_empty_energy"] = 0
+            sub_account["try_to_refresh_with_no_pega"] = 0
 
         return jsonify({
             'to_change': True,
