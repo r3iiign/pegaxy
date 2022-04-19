@@ -165,6 +165,9 @@ const $remove = (elem) => {
 
           if ( $(".alert-desc") && $(".alert-desc").textContent == "You don't have any available Pegas yet. Required at least one to join racing" ) {
 
+            $(".navbar-assest .assest-inner:nth-of-type(3)").click()
+            const subAccount = $("div.navdrop-inner div.sidebar.open div.sidebar-inner div.sidebar-header button span").textContent
+
             httpGetAsync("http://localhost:5000/account_no_pega?sub_account=" + subAccount, async (result) => {
                 result = JSON.parse(result)
                 if (result["to_go_to_next_account"]) {
