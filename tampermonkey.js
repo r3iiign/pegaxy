@@ -165,6 +165,9 @@ const $remove = (elem) => {
 
         var botao = $(".button-game.pinks");
         if(botao){
+          if ($(".alert-desc").textContent == "There are some matchmaking issues. Do you want to reload again or back to lobby?") {
+            location.reload(true);
+          }
           botao.click();
         }
 
