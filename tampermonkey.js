@@ -51,6 +51,16 @@ const $remove = (elem) => {
 
     while(true){
 
+      if ($('.navbar-nav')){
+          while ($('.navbar-nav').children.length > 4){
+              $('.navbar-nav').children[0].remove()
+          }
+
+          var element = document.createElement("template");
+          element.innerHTML = "<li style='font-size: 26px;'>pega1 = "+ pegaEnergy1 + " pega2 = "+ pegaEnergy2 + " pega3 = "+ pegaEnergy2 + "</li>"
+          $('.navbar-nav').prepend(element.content.children[0])
+      }
+
       if (reloaded){
         await sleep(1000 * 3);
       }
