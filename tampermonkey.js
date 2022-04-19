@@ -260,7 +260,8 @@ async function restart(description) {
     "sub_account=" + subAccount +
     "&energy_pega_1=" + pegaEnergy1 +
     "&energy_pega_2=" + pegaEnergy2 +
-    "&energy_pega_3=" + pegaEnergy3
+    "&energy_pega_3=" + pegaEnergy3 +
+    "&last_race_started_description=" + description
     , ()=>{ pegaEnergy1 = "";pegaEnergy2 = "";pegaEnergy3 = ""; window.location.href = "https://play.pegaxy.io/racing/pick-pega";})
 
     pegaEnergy1 = "";

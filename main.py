@@ -29,26 +29,26 @@ def get_data():
 
     sub_accounts_already_run = [x for x in sub_accounts if _already_run(x)]
 
-    accounts_with_0_horses = list(map(lambda x: {"index" :x["sub_account_index"], "subaccount": x["sub_account"]},
+    accounts_with_0_horses = list(map(lambda x: {"index" :x["sub_account_index"], "last_race_started_description" :x["last_race_started_description"], "subaccount": x["sub_account"]},
                                       [x for x in sub_accounts_already_run if
                                        (not _has_horses(x["energy_pega_1"])) and
                                        (not _has_horses(x["energy_pega_2"])) and
                                        (not _has_horses(x["energy_pega_3"]))
                                        ]))
 
-    accounts_with_1_horses = list(map(lambda x: {"index" :x["sub_account_index"], "subaccount": x["sub_account"], "pega_1": x["energy_pega_1"]},
+    accounts_with_1_horses = list(map(lambda x: {"index" :x["sub_account_index"], "last_race_started_description" :x["last_race_started_description"], "subaccount": x["sub_account"], "pega_1": x["energy_pega_1"]},
                                       [x for x in sub_accounts_already_run if
                                        _has_horses(x["energy_pega_1"]) and
                                        (not _has_horses(x["energy_pega_2"])) and
                                        (not _has_horses(x["energy_pega_3"]))
                                        ]))
-    accounts_with_2_horses = list(map(lambda x: {"index" :x["sub_account_index"], "subaccount": x["sub_account"], "pega_1": x["energy_pega_1"], "pega_2": x["energy_pega_2"]},
+    accounts_with_2_horses = list(map(lambda x: {"index" :x["sub_account_index"], "last_race_started_description" :x["last_race_started_description"], "subaccount": x["sub_account"], "pega_1": x["energy_pega_1"], "pega_2": x["energy_pega_2"]},
                                       [x for x in sub_accounts_already_run if
                                        _has_horses(x["energy_pega_1"]) and
                                        _has_horses(x["energy_pega_2"]) and
                                        (not _has_horses(x["energy_pega_3"]))
                                        ]))
-    accounts_with_3_horses = list(map(lambda x: {"index" :x["sub_account_index"], "subaccount": x["sub_account"], "pega_1": x["energy_pega_1"], "pega_2": x["energy_pega_2"], "pega_3": x["energy_pega_3"]},
+    accounts_with_3_horses = list(map(lambda x: {"index" :x["sub_account_index"], "last_race_started_description" :x["last_race_started_description"], "subaccount": x["sub_account"], "pega_1": x["energy_pega_1"], "pega_2": x["energy_pega_2"], "pega_3": x["energy_pega_3"]},
                                       [x for x in sub_accounts_already_run if
                                        _has_horses(x["energy_pega_1"]) and
                                        _has_horses(x["energy_pega_2"]) and
@@ -108,6 +108,7 @@ def pega_race_started():
     energy_pega_1 = request.args.get('energy_pega_1')
     energy_pega_2 = request.args.get('energy_pega_2')
     energy_pega_3 = request.args.get('energy_pega_3')
+    last_race_started_description = request.args.get('last_race_started_description')
 
     sub_account_object = [x for x in sub_accounts if x["sub_account"].startswith(sub_account[:5]) and x["sub_account"].endswith("..." + sub_account[-4:])]
     if sub_account_object:
@@ -115,6 +116,7 @@ def pega_race_started():
         sub_account_object[0]["energy_pega_1"] = energy_pega_1
         sub_account_object[0]["energy_pega_2"] = energy_pega_2
         sub_account_object[0]["energy_pega_3"] = energy_pega_3
+        sub_account_object[0]["last_race_started_description"] = last_race_started_description
         sub_account_object[0]["playing"] = True
 
     return jsonify({'result': "OK"})
