@@ -168,11 +168,7 @@ def _get_next_sub_account_index(actual_sub_account):
         if max_energy != "" and int(max_energy) > 10:
             return sub_account_object['sub_account_index']
         else:
-            return max(sub_accounts, key=lambda x: x['started_time'])['sub_account_index']
-
-
-
-
+            return min(sub_accounts, key=lambda x: x['started_time'])['sub_account_index']
 
 
 def _get_empty_sub_account():
