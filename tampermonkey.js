@@ -51,6 +51,16 @@ const $remove = (elem) => {
 
     while(true){
 
+      if ($('.navbar-nav')){
+          while ($('.navbar-nav').children.length > 4){
+              $('.navbar-nav').children[0].remove()
+          }
+
+          var element = document.createElement("template");
+          element.innerHTML = "<li style='font-size: 26px;'>pega1 = "+ pegaEnergy1 + " pega2 = "+ pegaEnergy2 + " pega3 = "+ pegaEnergy2 + "</li>"
+          $('.navbar-nav').prepend(element.content.children[0])
+      }
+
       if (reloaded){
         await sleep(1000 * 3);
       }
@@ -129,15 +139,11 @@ const $remove = (elem) => {
 
         var pegaIndex = await getPegaWithMaxEnergy();
 
-        try{ pegaEnergy1 = $(".pick-pega > .list-pick > div.item-pega:nth-of-type(1) div div div:nth-of-type(3) div:nth-of-type(2) div div:nth-of-type(2) div span").textContent.split("/25")[0] } catch(e){ pegaEnergy1 = ""}
-        try{ pegaEnergy2 = $(".pick-pega > .list-pick > div.item-pega:nth-of-type(2) div div div:nth-of-type(3) div:nth-of-type(2) div div:nth-of-type(2) div span").textContent.split("/25")[0] } catch(e){ pegaEnergy2 = ""}
-        try{ pegaEnergy3 = $(".pick-pega > .list-pick > div.item-pega:nth-of-type(3) div div div:nth-of-type(3) div:nth-of-type(2) div div:nth-of-type(2) div span").textContent.split("/25")[0] } catch(e){ pegaEnergy3 = ""}
-
-        if (pegaIndex === undefined) {
-          await sleep(2000);
-        }
-
         if(pegaIndex >=0 ){
+
+          try{ pegaEnergy1 = $(".pick-pega > .list-pick > div.item-pega:nth-of-type(1) div div div:nth-of-type(3) div:nth-of-type(2) div div:nth-of-type(2) div span").textContent.split("/25")[0] } catch(e){ pegaEnergy1 = ""}
+          try{ pegaEnergy2 = $(".pick-pega > .list-pick > div.item-pega:nth-of-type(2) div div div:nth-of-type(3) div:nth-of-type(2) div div:nth-of-type(2) div span").textContent.split("/25")[0] } catch(e){ pegaEnergy2 = ""}
+          try{ pegaEnergy3 = $(".pick-pega > .list-pick > div.item-pega:nth-of-type(3) div div div:nth-of-type(3) div:nth-of-type(2) div div:nth-of-type(2) div span").textContent.split("/25")[0] } catch(e){ pegaEnergy3 = ""}
 
           console.log("Vai clicar no pega");
           var pegaxy = $a(".item-pega")[pegaIndex];
@@ -145,16 +151,14 @@ const $remove = (elem) => {
           await sleep(1000 * 2);
           // console.log("Clicou no pega");
 
-          emptyEnergy = 0;
-        }
 
-        var botaoStart = $(".viewButton");
-
-        if(botaoStart && botaoStart.innerText == "START"){
-          botaoStart.click();
-          // console.log("Clicou no START");
-        } else {
-          // console.log("Não achou START");
+          var botaoStart = $(".viewButton");
+          if(botaoStart && botaoStart.innerText == "START"){
+            botaoStart.click();
+            // console.log("Clicou no START");
+          } else {
+            // console.log("Não achou START");
+          }
         }
       }
       else {
