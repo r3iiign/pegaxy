@@ -137,7 +137,7 @@ def metamask_get_next_sub_account():
         sub_account_object[0]["playing"] = False
         sub_account_object[0]["started_time"] = datetime.datetime.now()
 
-        next_sub_account_index = _get_next_sub_account_index()
+        next_sub_account_index = _get_next_sub_account_index(actual_sub_account)
         sub_accounts[next_sub_account_index]["started_time"] = datetime.datetime.now()
 
         for sub_account in sub_accounts:
@@ -151,7 +151,7 @@ def metamask_get_next_sub_account():
         return jsonify({'to_change': False})
 
 
-def _get_next_sub_account_index():
+def _get_next_sub_account_index(actual_sub_account):
     empty_sub_account = _get_empty_sub_account()
 
     if empty_sub_account is not None:
@@ -161,7 +161,7 @@ def _get_next_sub_account_index():
         sorted_sub_accounts = sorted_sub_accounts[:4]
         sorted_sub_accounts = list(map(lambda x: x["sub_account"], sorted_sub_accounts))
 
-        sub_account_object = max(filter(lambda f: f["sub_account"] not in sorted_sub_accounts, sub_accounts), key=lambda x: max({x['energy_pega_1'], x['energy_pega_2'], x['energy_pega_3']}, key=lambda y: y))
+        sub_account_object = max(filter(lambda f: f["sub_account"] != actual_sub_account and f["sub_account"]  not in sorted_sub_accounts, sub_accounts), key=lambda x: max({x['energy_pega_1'], x['energy_pega_2'], x['energy_pega_3']}, key=lambda y: y))
 
         max_energy = max({sub_account_object['energy_pega_1'], sub_account_object['energy_pega_2'], sub_account_object['energy_pega_3']})
 
