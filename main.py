@@ -184,9 +184,9 @@ def _get_next_sub_account_index(actual_sub_account):
         sorted_sub_accounts = sorted_sub_accounts[:4]
         sorted_sub_accounts = list(map(lambda x: x["sub_account"], sorted_sub_accounts))
 
-        sub_account_object = max(filter(lambda f: f["sub_account"] != actual_sub_account and f["sub_account"]  not in sorted_sub_accounts, sub_accounts), key=lambda x: max({int(x['energy_pega_1']), int(x['energy_pega_2']), int(x['energy_pega_3'])}, key=lambda y: y))
+        sub_account_object = max(filter(lambda f: f["sub_account"] != actual_sub_account and f["sub_account"]  not in sorted_sub_accounts, sub_accounts), key=lambda x: max({int(x['energy_pega_1'] if x['energy_pega_1'] != '' else 0), int(x['energy_pega_2']  if x['energy_pega_2'] != '' else 0), int(x['energy_pega_3'] if x['energy_pega_3'] != '' else 0)}, key=lambda y: y))
 
-        max_energy = max({int(sub_account_object['energy_pega_1']), int(sub_account_object['energy_pega_2']), int(sub_account_object['energy_pega_3'])})
+        max_energy = max({int(sub_account_object['energy_pega_1'] if sub_account_object['energy_pega_1'] != '' else 0), int(sub_account_object['energy_pega_2'] if sub_account_object['energy_pega_2'] != '' else 0), int(sub_account_object['energy_pega_3'] if sub_account_object['energy_pega_3'] != '' else 0)})
 
         if max_energy != "" and int(max_energy) > 10:
             return sub_account_object['sub_account_index']
