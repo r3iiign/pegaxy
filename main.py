@@ -96,7 +96,6 @@ def pega_empty():
     sub_account_object["try_to_refresh_with_empty_energy"] = sub_account_object["try_to_refresh_with_empty_energy"] + 1
 
     if sub_account_object["try_to_refresh_with_empty_energy"] > 3:
-        sub_account_object["try_to_refresh_with_empty_energy"] = 0
         return jsonify({'to_go_to_next_account': True})
     else:
         return jsonify({'to_go_to_next_account': False})
@@ -140,6 +139,10 @@ def metamask_get_next_sub_account():
 
         next_sub_account_index = _get_next_sub_account_index(actual_sub_account)
         sub_accounts[next_sub_account_index]["started_time"] = datetime.datetime.now()
+
+        for sub_account in sub_accounts:
+            sub_account["try_to_refresh_with_empty_energy"] = 0
+
         return jsonify({
             'to_change': True,
             "next_sub_account_index": next_sub_account_index
