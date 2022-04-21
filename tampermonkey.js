@@ -141,10 +141,6 @@ const $remove = (elem) => {
 
         if(pegaIndex >=0 ){
 
-          try{ pegaEnergy1 = $(".pick-pega > .list-pick > div.item-pega:nth-of-type(1) div div div:nth-of-type(3) div:nth-of-type(2) div div:nth-of-type(2) div span").textContent.split("/25")[0] } catch(e){ pegaEnergy1 = ""}
-          try{ pegaEnergy2 = $(".pick-pega > .list-pick > div.item-pega:nth-of-type(2) div div div:nth-of-type(3) div:nth-of-type(2) div div:nth-of-type(2) div span").textContent.split("/25")[0] } catch(e){ pegaEnergy2 = ""}
-          try{ pegaEnergy3 = $(".pick-pega > .list-pick > div.item-pega:nth-of-type(3) div div div:nth-of-type(3) div:nth-of-type(2) div div:nth-of-type(2) div span").textContent.split("/25")[0] } catch(e){ pegaEnergy3 = ""}
-
           console.log("Vai clicar no pega");
           var pegaxy = $a(".item-pega")[pegaIndex];
           pegaxy.click();
@@ -217,7 +213,14 @@ const $remove = (elem) => {
         }
       }
 
-      if (maxEnergy == 0 || pegaMaxEnergy < 0) {
+      if (maxEnergy >= 0) {
+          try{ pegaEnergy1 = $(".pick-pega > .list-pick > div.item-pega:nth-of-type(1) div div div:nth-of-type(3) div:nth-of-type(2) div div:nth-of-type(2) div span").textContent.split("/25")[0] } catch(e){ pegaEnergy1 = ""}
+          try{ pegaEnergy2 = $(".pick-pega > .list-pick > div.item-pega:nth-of-type(2) div div div:nth-of-type(3) div:nth-of-type(2) div div:nth-of-type(2) div span").textContent.split("/25")[0] } catch(e){ pegaEnergy2 = ""}
+          try{ pegaEnergy3 = $(".pick-pega > .list-pick > div.item-pega:nth-of-type(3) div div div:nth-of-type(3) div:nth-of-type(2) div div:nth-of-type(2) div span").textContent.split("/25")[0] } catch(e){ pegaEnergy3 = ""}
+
+      }
+
+      if (maxEnergy == 0 && pegaMaxEnergy < 0) {
 
         $(".navbar-assest .assest-inner:nth-of-type(3)").click()
         const subAccount = $("div.navdrop-inner div.sidebar.open div.sidebar-inner div.sidebar-header button span").textContent
@@ -231,6 +234,7 @@ const $remove = (elem) => {
           }
 
         })
+
       }
 
       return pegaMaxEnergy;
